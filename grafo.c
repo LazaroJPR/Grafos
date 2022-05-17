@@ -11,11 +11,11 @@ int **alocaMatrizAdj(int r, int c, int val){
 	return m;
 }
 
-Grafo *criaGrafo (int V){
+Grafo *criaGrafo (int v){
 	Grafo *G = malloc(sizeof(Grafo));
-	G->V = V;
+	G->V = v;
 	G->E = 0;
-	G->ajd = alocaMatrizAdj(V, V, 0);
+	G->ajd = alocaMatrizAdj(v, v, 0);
 	return G;
 }
 
@@ -43,4 +43,13 @@ void imprimeGrafo(Grafo *G){
         	if(G->adj[v][w] == 1) printf(" %2d", w);
     	printf("\n");
 	}
+}
+
+int grau(Grafo *G, int v){
+	int i, grau = 0;
+
+	for(i = 0; i < v; i++){
+		if(G->adj[v][i] == 1) grau++;
+	}
+	return grau;
 }
