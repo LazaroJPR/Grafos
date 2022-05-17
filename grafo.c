@@ -48,18 +48,22 @@ void imprimeGrafo(Grafo *G){
 void imprimeAdjacente(Grafo *G, int v){
 	int i;
 
-	for(i = 0; i < v; i++){
+	for(i = 0; i < G->V; i++){
 		if(G->adj[v][i] == 1){
 			printf("/nVertices adjacentes: /n");
-			printf(" %2d \n", w);
+			printf(" %2d \n", i);
 		}
 	}
+}
+
+void verificaAdjacencia(Grafo *G, int v, int w){
+	if(G->adj[v][w] == 1) printf("O vertice %2d e adjacente ao vertice %2d\n", v, w);
 }
 
 int grau(Grafo *G, int v){
 	int i, grau = 0;
 
-	for(i = 0; i < v; i++){
+	for(i = 0; i < G->V; i++){
 		if(G->adj[v][i] == 1) grau++;
 	}
 	return grau;
