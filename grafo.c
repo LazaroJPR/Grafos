@@ -38,10 +38,21 @@ void removeAresta(Grafo *G, int v, int w){
 void imprimeGrafo(Grafo *G){
 	int v, w;
 	for(v = 0; v < G->V; v++){
-    	print("%2d:", v);
+    	printf("%2d:", v);
     	for(w = 0; w < G->V; w++)
         	if(G->adj[v][w] == 1) printf(" %2d", w);
     	printf("\n");
+	}
+}
+
+void imprimeAdjacente(Grafo *G, int v){
+	int i;
+
+	for(i = 0; i < v; i++){
+		if(G->adj[v][i] == 1){
+			printf("/nVertices adjacentes: /n");
+			printf(" %2d \n", w);
+		}
 	}
 }
 

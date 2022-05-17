@@ -23,6 +23,9 @@ void removeAresta(Grafo *G, int v, int w);
 //Funcao que realiza a impressao do grafo
 void imprimeGrafo(Grafo *G);
 
+//Funcao que imprime todos os vertices adjacentes
+void imprimeAdjacente(Grafo *G, int v);
+
 //Funcao que calcula o grau de um vertice
 int grau(Grafo *G, int v);
 
