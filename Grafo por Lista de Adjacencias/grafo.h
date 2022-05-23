@@ -33,4 +33,7 @@ void imprimeGrafo(Grafo *G);
 //Retornara uma arvore de largura
 void percursoEmLargura(Grafo *G);
 
+//Funcao que verifica se um grafo e bipartido
+bool bipartido(Grafo *G);
+
 #endif //GRAFO

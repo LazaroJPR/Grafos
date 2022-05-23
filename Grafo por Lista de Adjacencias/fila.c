@@ -22,16 +22,13 @@ fila* criarFila(){
 }
 
 int filaVazia(fila* q){
-  if(q->fim == -1)
-    return 1;
-  else
-    return 0;
+  if(q->fim == -1) return 1;
+  else return 0;
 }
 
 void enfileirar(fila* q, int value){
-  if (q->fim == SIZE - 1)
-    printf("\nFila esta cheia!");
-  else {
+  if (q->fim == SIZE - 1) return;
+  else{
     if (q->inicio == -1) q->inicio = 0;
     q->fim++;
     q->items[q->fim] = value;
@@ -40,10 +37,8 @@ void enfileirar(fila* q, int value){
 
 int desenfileirar(fila* q){
   int item;
-  if (filaVazia(q)) {
-    printf("\nFila esta vazia!");
-    item = -1;
-  }else {
+  if (filaVazia(q)) item = -1;
+  else{
     item = q->items[q->inicio];
     q->inicio++;
     if(q->inicio > q->fim)q->inicio = q->fim = -1;

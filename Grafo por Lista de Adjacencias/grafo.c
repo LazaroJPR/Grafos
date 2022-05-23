@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <stdbool.h>
 #include "grafo.h"
 #include "fila.c"
 
@@ -129,4 +130,43 @@ void percursoEmLargura(Grafo *G){
         }
         else printf("\n Grafo possui somente um vertice!");
     }
+}
+
+bool bipartido(Grafo *G){
+    fila *filaV;
+    Vertice *r, *w;
+    int alc[G->V], niv[G->V];
+    int i, v, ac;
+
+    for(i = 0; i < G->V; i++) alc[i] = 0;
+
+    r = &G->adj[0];
+    filaV = criarFila();
+    enfileirar(filaV, 0);
+    alc[0] = ac = 1;
+    niv[0] = 1;
+
+    while(filaVazia(filaV) == 0){
+        v = desenfileirar(filaV);
+
+        if(G->adj[v].prox != NULL){
+            w = G->adj[v].prox;
+            while(w->prox != NULL){
+                if(alc[w->no] == 0){
+                    enfileirar(filaV, w->no);
+                    alc[w->no] = ac = ac++;
+                    niv[w->no] = niv[v] + 1;
+                }
+                if(alc[v] < alc[w->no]){
+                    if(niv[v] == niv[w->no]) return false;
+                    //Aresta V W foi explorada
+                }
+                w = w->prox;
+            }
+            //Vertice V foi explorado
+            v = desenfileirar(filaV);
+        }
+        else printf("\n Grafo possui somente um vertice!");
+    }
+    return true;
 }
