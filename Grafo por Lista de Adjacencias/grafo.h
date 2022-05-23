@@ -14,11 +14,11 @@ typedef struct grafo{
     Vertice *adj;
 }Grafo;
 
-//Funcao que aloca dinamicamente uma matriz de adjacencias
-int **alocaMatrizAdj(int r, int c, int val);
-
 //Funcao que cria o grafo
-Grafo *criaGrafo (int V);
+Grafo *criaGrafo (int v);
+
+//Funcao que cria um vertice
+Vertice *novoVertice(int x);
 
 //Funcao que realiza a insercao de uma aresta no grafo
 void insereAresta(Grafo *G, int v, int w);
@@ -29,13 +29,8 @@ void removeAresta(Grafo *G, int v, int w);
 //Funcao que realiza a impressao do grafo
 void imprimeGrafo(Grafo *G);
 
-//Funcao que imprime todos os vertices adjacentes
-void imprimeAdjacente(Grafo *G, int v);
-
-//Funcao que verifica se dois vertices sao adjacentes
-void verificaAdjacencia(Grafo *G, int v, int w);
-
-//Funcao que calcula o grau de um vertice
-int grau(Grafo *G, int v);
+//Funcao que realiza o percurso em largura de um grafo representado por uma lista de adjacenais
+//Retornara uma arvore de largura
+void percursoEmLargura(Grafo *G);
 
 #endif //GRAFO

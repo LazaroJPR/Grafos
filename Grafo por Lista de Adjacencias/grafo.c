@@ -1,10 +1,13 @@
+#include <stdlib.h>
+#include <stdio.h>
 #include "grafo.h"
+#include "fila.c"
 
 Grafo *criaGrafo (int v){
 	Grafo *G = (Grafo*)malloc(sizeof(Grafo));
 	G->V = v;
 	G->E = 0;
-	G->ajd = (Vertice*)calloc(V, sizeof(Vertice));
+	G->adj = (Vertice*)calloc(v, sizeof(Vertice));
 	return G;
 }
 
@@ -29,7 +32,7 @@ void insereAresta(Grafo *G, int v, int w){
             G->adj[v].prox = novo;
             G->E++;
         }
-        
+
         p = G->adj[w].prox;
         while(p != NULL){
             if(p->no == v) break;
@@ -61,8 +64,8 @@ void removeAresta(Grafo *G, int v, int w){
         }
     }
     if(G->adj[w].prox != NULL){
-        aux = G->adj[v].prox;
-        preaux = &(G->adj[v]);
+        Vertice *aux = G->adj[v].prox;
+        Vertice *preaux = &(G->adj[v]);
 
         while(aux != NULL){
             if(aux->no == w) break;
@@ -81,7 +84,7 @@ void imprimeGrafo(Grafo *G){
     int v;
     Vertice *w;
     for(v = 0; v < G->V; v++){
-        printf("%2d:" v);
+        printf("%2d:", v);
         w = G->adj[v].prox;
 
         while(w != NULL){
@@ -89,5 +92,41 @@ void imprimeGrafo(Grafo *G){
             w = w->prox;
         }
         printf("\n");
+    }
+}
+
+void percursoEmLargura(Grafo *G){
+    fila *filaV;
+    Vertice *r, *w;
+    int alc[G->V];
+    int i, v, ac;
+
+    for(i = 0; i < G->V; i++) alc[i] = 0;
+
+    r = &G->adj[0];
+    filaV = criarFila();
+    enfileirar(filaV, 0);
+    alc[0] = ac = 1;
+
+    while(filaVazia(filaV) == 0){
+        v = desenfileirar(filaV);
+
+        if(G->adj[v].prox != NULL){
+            w = G->adj[v].prox;
+            while(w->prox != NULL){
+                if(alc[w->no] == 0){
+                    enfileirar(filaV, w->no);
+                    alc[w->no] = ac = ac++;
+                    //Adicionar conjunto de aresta v,w
+                }
+                if(alc[v] < alc[w->no]){
+                    //Aresta V W foi explorada
+                }
+                w = w->prox;
+            }
+            //Vertice V foi explorado
+            v = desenfileirar(filaV);
+        }
+        else printf("\n Grafo possui somente um vertice!");
     }
 }
