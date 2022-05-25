@@ -97,45 +97,46 @@ void imprimeGrafo(Grafo *G){
     }
 }
 
-bool bipartido(Grafo *G){
-    fila *filaV;
-    Vertice *r, *w;
-    int alc[G->V], niv[G->V];
-    int i, v, ac;
+int ehConexo(Grafo *G){
+    int visitado[G->V], i, j;
+    int contador, contadorLoop, subContador;
 
-    for(i = 0; i < G->V; i++) alc[i] = 0;
+    for(i = 0; i < G->V; i++) visitado[i] = 0;
 
-    r = &G->adj[0];
-    filaV = criarFila();
-    enfileirar(filaV, 0);
-    alc[0] = ac = 1;
-    niv[0] = 1;
+    percursoEmProfundidade(0, G, visitado);
 
-    while(filaVazia(filaV) == 0){
-        v = desenfileirar(filaV);
-
-        if(G->adj[v].prox != NULL){
-            w = G->adj[v].prox;
-            while(w->prox != NULL){
-                if(alc[w->no] == 0){
-                    enfileirar(filaV, w->no);
-                    alc[w->no] = ac = ac++;
-                    niv[w->no] = niv[v] + 1;
-                }
-                if(alc[v] < alc[w->no]){
-                    if(niv[v] == niv[w->no]){
-                        printf("NAO\n");
-                        return false;
-                    }
-                    //Aresta V W foi explorada
-                }
-                w = w->prox;
-            }
-            //Vertice V foi explorado
-            v = desenfileirar(filaV);
-        }
-        else printf("\n Grafo possui somente um vertice!");
+    contador = subContador = 0;
+    for(i = 0; i < G->V; i++){
+        if(visitado[i] == 1) contador++;
+        visitado[i] = 0;
     }
-    printf("SIM\n");
-    return true;
+
+    for(i = 1; i < G->V; i++){
+        percursoEmProfundidade(i, G, visitado);
+        contadorLoop = 0;
+        for(j = 0; j < G->V; j++){
+            if(visitado[j] == 1) contadorLoop++;
+            visitado[j] = 0;
+        }
+        if(contadorLoop == 1) subContador++;
+    }
+    if(G->V == contador) return 0;
+    else if(G->V == contador + subContador) return subContador;
+    else return G->V - contador -1;
+
+}
+
+void percursoEmProfundidade(int raiz, Grafo *G, int visitado[]){
+    int i, proximo;
+    Vertice *vert;
+
+    visitado[raiz] = 1;
+    vert = G->adj[raiz].prox;
+
+    while(vert != NULL){
+        proximo = G->adj[raiz].prox->no;
+        if(visitado[proximo] == 0)
+            percursoEmProfundidade(proximo, G, visitado);
+        vert = vert->prox;
+    }
 }

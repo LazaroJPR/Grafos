@@ -5,27 +5,33 @@ void clear (void){
     while ((c = getchar()) != '\n' && c != EOF);
 }
 
-void criarCidade(){
+void criarCidade(int caso){
     Grafo *cidade;
     char pPrincipal, nEstrada, pontX, pontY;
-    int pontosPrincipais, estradasConstruidas, i, pontoX, pontoY;
+    int pontosPrincipais, estradasConstruidas, i, pontoX, pontoY, conectividade;
 
     scanf("%c", &pPrincipal);
-    pontosPrincipais = pPrincipal - '0'-1;
+    pontosPrincipais = pPrincipal - '0';
+    clear();
     scanf("%c", &nEstrada);
-    estradasConstruidas = nEstrada - '0'-1;
+    estradasConstruidas = nEstrada - '0';
     clear();
 
     cidade = criaGrafo(pontosPrincipais);
 
     for(i = 0; i < estradasConstruidas; i++){
-        scanf("%d %d", &pontX, &pontY);
-        pontoX = pontX - '0';
-        pontoY = pontY - '0';
+        scanf("%c %c", &pontX, &pontY);
+        clear();
+        pontoX = pontX - '0'-1;
+        pontoY = pontY - '0'-1;
 
         insereAresta(cidade, pontoX, pontoY);
     }
-    //Verificar Promessa
+
+    conectividade = ehConexo(cidade);
+    if(conectividade == 0)printf("Caso #%d: a promessa foi cumprida\n", caso+1);
+    else printf("Caso #%d: ainda falta(m) %d estrada(s)\n", caso+1, conectividade);
+    caso++;
 }
 
 
@@ -36,5 +42,5 @@ void main(){
 	fgets(resp, 4, stdin);
     entrada = strtol(resp, NULL, 10);
 
-    for(i = 0; i < entrada; i++) criarCidade();
+    for(i = 0; i < entrada; i++) criarCidade(i);
 }

@@ -29,7 +29,10 @@ void removeAresta(Grafo *G, int v, int w);
 //Funcao que realiza a impressao do grafo
 void imprimeGrafo(Grafo *G);
 
-//Funcao que verifica se um grafo e bipartido
-bool bipartido(Grafo *G);
+//Funcao que verifica se um grafo e conexo
+int ehConexo(Grafo *G);
+
+//Funcao que realiza o percurso em profundidade a partir de um vertice para verificar se e conexo
+void percursoEmProfundidade(int raiz, Grafo *G, int visitado[]);
 
 #endif //GRAFO
